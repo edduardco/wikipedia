@@ -13,8 +13,8 @@ public class HomeSteps {
     private HomePage homePage;
 
     @When("User searches {string}")
-    public void goToPage(String page){
-        this.homePage.goToPage(page);
+    public void goToPage(String articleName){
+        this.homePage.searchArticle(articleName);
     }
 
 }
