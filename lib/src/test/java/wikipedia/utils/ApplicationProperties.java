@@ -6,9 +6,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@Data
 @Configuration
 @ConfigurationProperties
+@Data
 @EnableConfigurationProperties
 public class ApplicationProperties {
 

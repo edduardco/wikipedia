@@ -3,4 +3,6 @@ Feature: Web Automation Testing
 
   @Search
   Scenario: Search article
-    When User searches "automation"
+    Given User searches article of "automation"
+    When User selects the first result
+    Then User verifies article title

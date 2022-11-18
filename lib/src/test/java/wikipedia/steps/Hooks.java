@@ -10,17 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.testng.annotations.BeforeClass;
 import wikipedia.config.WebDriverFactory;
 import wikipedia.utils.ApplicationProperties;
 
 public class Hooks {
-
-    @BeforeClass
-    public static void setupWebdriver() {
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "/src/main/resources/chromedriver");
-        System.setProperty("webdriver.firefox.driver", System.getProperty("user.dir") + "/src/main/resources/geckodriver");
-    }
 
     @Autowired
     @Lazy
@@ -44,14 +37,14 @@ public class Hooks {
     }
 
     @Before(order = 2)
-    public void initDriver() {
+    public void setUp() {
         driver = webDriverFactory.getDriver();
         driver.get(properties.getUrl());
         baseSteps.setupPages(driver);
     }
 
     @After
-    public void teardown(Scenario scenario) {
+    public void tearDown(Scenario scenario) {
         byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         scenario.attach(screenshot, "image/png", scenario.getName());
         if (driver != null) {
