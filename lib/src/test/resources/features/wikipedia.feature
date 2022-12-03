@@ -1,7 +1,7 @@
-@Wikipedia
+@wikipedia
 Feature: Web Automation Testing
 
-  @Search
+  @wikipedia-search
   Scenario: Search article
     Given User searches article of "automation"
     When User selects the first result

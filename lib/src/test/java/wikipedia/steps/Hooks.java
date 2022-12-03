@@ -3,6 +3,7 @@ package wikipedia.steps;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Lazy;
 import wikipedia.config.WebDriverFactory;
 import wikipedia.utils.ApplicationProperties;
 
+@Slf4j
 public class Hooks {
 
     @Autowired

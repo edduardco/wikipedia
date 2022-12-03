@@ -6,7 +6,8 @@ import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import wikipedia.pages.HomePage;
-import wikipedia.utils.WikipediaPOJO;
+
+import java.util.EnumMap;
 
 public class HomeSteps {
 
@@ -14,11 +15,15 @@ public class HomeSteps {
     @Lazy
     private HomePage homePage;
 
-    private WikipediaPOJO wikiPOJO = new WikipediaPOJO();
+    public enum WikipediaENUM {
+        ARTICLE_NAME
+    }
+
+    EnumMap<WikipediaENUM, Object> wikipediaEnumMap = new EnumMap<>(WikipediaENUM.class);
 
     @Given("User searches article of {string}")
     public void searchArticle(String articleName){
-        wikiPOJO.setArticleTitle(articleName);
+        wikipediaEnumMap.put(WikipediaENUM.ARTICLE_NAME, articleName);
         this.homePage.searchArticle(articleName);
     }
 
@@ -29,7 +34,7 @@ public class HomeSteps {
 
     @Then("User verifies article title")
     public void verifyTitle(){
-        this.homePage.verifyTitle(wikiPOJO.getArticleTitle());
+        this.homePage.verifyTitle((String) wikipediaEnumMap.get(WikipediaENUM.ARTICLE_NAME));
     }
 
 }

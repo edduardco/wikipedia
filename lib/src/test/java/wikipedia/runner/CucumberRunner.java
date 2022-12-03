@@ -6,8 +6,7 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(features = "lib/src/test/resources/features",
         glue = {"wikipedia"},
-        plugin = {
-                "pretty",
+        plugin = {"pretty",
                 "html:build/test-results/html-report.html",
                 "json:build/test-results/json-report.json"
         })
