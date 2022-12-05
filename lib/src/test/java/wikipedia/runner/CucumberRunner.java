@@ -7,9 +7,7 @@ import org.testng.annotations.DataProvider;
 @CucumberOptions(features = "lib/src/test/resources/features",
         glue = {"wikipedia"},
         plugin = {"pretty",
-                "html:build/test-results/html-report.html",
-                "json:build/test-results/json-report.json"
-        })
+                "io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"})
 public class CucumberRunner extends AbstractTestNGCucumberTests {
 
         @Override

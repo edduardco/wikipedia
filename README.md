@@ -15,15 +15,30 @@ Selenium template with:
 ./gradlew clean test
 ```
 
+**Build report with**
+```bash
+./gradlew allureServe
+```
+
+**Run and generate report**
+```bash
+./gradlew clean allureReport --depends-on-tests
+```
+
+**Check report with**
+```bash
+allure serve '/lib/build/allure-results/allure-results'
+```
+
 _Example:_ 
 ```bash
-./gradlew clean test -Dcucumber.filter.tags="@wikipedia-search"
+./gradlew clean test -D"cucumber.filter.tags=@wikipediaSearch"
 ```
 
 ### Command line options:
 Run on target scenario
 ```bash
--Dcucumber.filter.tags="@wikipedia-search"
+-D"cucumber.filter.tags=@wikipedia"
 ````
 
 Run on target browser:

@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
-    id "com.github.spacialcircumstances.gradle-cucumber-reporting" version "0.1.24"
+    id "io.qameta.allure" version "2.11.2"
     id "com.avast.gradle.docker-compose" version "0.16.9"
     id "io.freefair.lombok" version "6.5.1"
 }
@@ -16,40 +16,51 @@ ext {
     spring = '2.6.6'
     lombok = '1.18.24'
     hamcrest = '2.2'
+    allure = '2.20.1'
+    testng = '7.6.1'
 }
 
 dependencies {
-    implementation group: 'io.cucumber', name: 'cucumber-java', version: "$cucumber"
-    implementation group: 'io.cucumber', name: 'cucumber-testng', version: "$cucumber"
-    implementation group: 'io.cucumber', name: 'cucumber-spring', version: "$cucumber"
+    testImplementation group: 'io.cucumber', name: 'cucumber-java', version: "$cucumber"
+    testImplementation group: 'io.cucumber', name: 'cucumber-testng', version: "$cucumber"
+    testImplementation group: 'io.cucumber', name: 'cucumber-spring', version: "$cucumber"
 
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: "$selenium"
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-api', version: "$selenium"
-
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: "$selenium"
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-api', version: "$selenium"
     testImplementation("io.github.bonigarcia:webdrivermanager:5.3.1")
 
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring"
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: "$spring"
     testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: "$spring"
 
     testImplementation group: 'org.hamcrest', name: 'hamcrest', version: "$hamcrest"
+
+    testImplementation group: 'org.testng', name: 'testng', version: "$testng"
+
+    testImplementation group: 'io.qameta.allure', name: 'allure-cucumber6-jvm', version: "$allure"
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+allure {
+    version = "$allure"
+    adapter {
+        allureJavaVersion = "$allure"
+        autoconfigure = true
+        autoconfigureListeners = true
+        aspectjweaver = true
+    }
 }
 
 test {
+    ignoreFailures = true
     useTestNG()
-    systemProperties(System.properties)
+    systemProperties = System.properties
     scanForTestClasses = false
     testLogging.showStandardStreams = true
-}
-
-clean.doFirst {
-    delete "$projectDir/build"
-}
-
-cucumberReports {
-    outputDir = file("$projectDir/build/test-results")
-    buildId = '0'
-    reports = files("$projectDir/reports/cucumber-report.json")
-    trends = file("$projectDir/reports/trends.json")
 }
 
 //dockerCompose.isRequiredBy test
